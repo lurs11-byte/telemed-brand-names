@@ -69,6 +69,17 @@ async function commitStatus(id, newStatus){
   showStatus('Saved.', 'ok');
 }
 
+async function deleteName(id){
+  const rec = findName(id);
+  if (!rec) return;
+  const typed = window.prompt(`This permanently deletes "${rec.name}" and its full history. This cannot be undone.\n\nType the name exactly to confirm: ${rec.name}`);
+  if (typed !== rec.name) { if (typed !== null) showStatus('Name didn\'t match — nothing deleted.', 'info'); return; }
+  const { error } = await supabase.from('names').delete().eq('id', id);
+  if (error){ showStatus('Delete failed: ' + error.message, 'err'); return; }
+  showStatus(`Deleted "${rec.name}".`, 'ok');
+  closeDrawer();
+}
+
 async function addTerritory(name){
   name = name.trim();
   if (!name) return false;
@@ -294,6 +305,7 @@ function closeDrawer(){
 function wireDrawer(){
   document.getElementById('drawer-close').onclick = closeDrawer;
   document.getElementById('drawer-overlay').onclick = closeDrawer;
+  document.getElementById('d-delete').onclick = () => drawerId && deleteName(drawerId);
   document.getElementById('d-status').addEventListener('change', e => drawerId && commitStatus(drawerId, e.target.value));
   const map = [['d-score','score'], ['d-medtrust','medtrust'], ['d-consumer','consumer'],
     ['d-memorability','memorability'], ['d-ownability','ownability'], ['d-multifit','multifit'],
