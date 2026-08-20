@@ -29,14 +29,14 @@
         <button class="tab" data-view="keep">Shortlist</button>
         <button class="tab" data-view="maybe">Maybe</button>
         <button class="tab" data-view="kill">Rejected</button>
-        <button class="tab" data-view="territory">By Territory</button>
+        <button class="tab" data-view="territory">By World</button>
         <button class="tab" data-view="domain">Domains</button>
         <button class="tab" data-view="germany">Germany</button>
         <button class="tab" data-view="criteria">Criteria</button>
       </div>
-      <input class="search" id="search" type="text" placeholder="Search name / territory / reason...">
+      <input class="search" id="search" type="text" placeholder="Search name / world / reason...">
       <div class="spacer"></div>
-      <button class="btn" id="btn-territories">Manage Territories</button>
+      <button class="btn" id="btn-territories">Manage Worlds</button>
       <button class="btn primary" id="btn-add">+ Add Name</button>
     </div>
   </header>
@@ -101,7 +101,7 @@
         <ol class="steps">
           <li>Take a root that already scored well (KEEP, high Germany Score, good ownability) — e.g. Vivo.</li>
           <li>Test combining it with a category word (Med, Care, Health) — does it add medical credibility without losing distinctiveness, or does it just get heavier and more generic?</li>
-          <li>Known risk: "Medical + Consumer" already has several rejections for "generic / B2B / too playful" (NovoMed, Medvian, Medozo). A new combination in this territory starts with a higher burden of proof, not a lower one.</li>
+          <li>Known risk: "Medical + Consumer" already has several rejections for "generic / B2B / too playful" (NovoMed, Medvian, Medozo). A new combination in this world starts with a higher burden of proof, not a lower one.</li>
           <li>Every new combination enters as <b>MAYBE</b>, never straight to KEEP, until it's been fully scored.</li>
         </ol>
       </section>
@@ -118,7 +118,7 @@
         <thead>
           <tr>
             <th data-sort="name">Name</th>
-            <th data-sort="territory">Territory</th>
+            <th data-sort="territory">World</th>
             <th data-sort="status">Status</th>
             <th data-sort="score">Germany Score</th>
             <th data-sort="domain_de">.de</th>
@@ -231,7 +231,7 @@
       <h2>Add name(s)</h2>
       <div class="hint">A single name, or several — one per line (bulk paste). All other fields start as UNKNOWN and can be filled in via the profile.</div>
       <textarea id="add-names" placeholder="Optiva&#10;Medwill&#10;Wello"></textarea>
-      <div class="dfield"><label>Territory (optional, applied to all)</label>
+      <div class="dfield"><label>World (optional, applied to all)</label>
         <input type="text" id="add-territory" list="territories-dl" placeholder="Pick from the list or leave blank">
       </div>
       <div class="modal-actions">
@@ -243,10 +243,10 @@
 
   <div class="modal" id="modal-terr">
     <div class="modal-card">
-      <h2>Manage Territories</h2>
-      <div class="hint">Renaming instantly affects every name in that territory. Merging moves all names to the target territory and deletes the source. Deletion only works on an empty territory.</div>
+      <h2>Manage Worlds</h2>
+      <div class="hint">Renaming instantly affects every name in that world. Merging moves all names to the target world and deletes the source. Deletion only works on an empty world.</div>
       <div class="terr-mgr-list" id="terr-mgr-list"></div>
-      <div class="dfield"><label>New territory</label>
+      <div class="dfield"><label>New world</label>
         <div style="display:flex;gap:8px;">
           <input type="text" id="terr-new-name" style="flex:1;">
           <button class="btn" id="terr-new-add">Add</button>

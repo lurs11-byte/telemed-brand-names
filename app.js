@@ -74,14 +74,14 @@ async function addTerritory(name){
   if (!name) return false;
   if (state.territories.includes(name)) return false;
   const { error } = await supabase.from('territories').insert({ name });
-  if (error){ showStatus('Failed to add territory: ' + error.message, 'err'); return false; }
+  if (error){ showStatus('Failed to add world: ' + error.message, 'err'); return false; }
   return true;
 }
 
 async function renameTerritory(oldName, newName){
   newName = newName.trim();
   if (!newName || newName === oldName) return;
-  if (state.territories.includes(newName)) { alert('A territory with that name already exists. Use merge instead.'); return; }
+  if (state.territories.includes(newName)) { alert('A world with that name already exists. Use merge instead.'); return; }
   const { error: e1 } = await supabase.from('territories').update({ name: newName }).eq('name', oldName);
   if (e1){ showStatus('Rename failed: ' + e1.message, 'err'); return; }
   const { error: e2 } = await supabase.from('names').update({ territory: newName }).eq('territory', oldName);
@@ -98,7 +98,7 @@ async function mergeTerritory(fromName, toName){
 
 async function deleteTerritoryIfEmpty(name){
   const count = state.names.filter(n => n.territory === name).length;
-  if (count > 0) { alert('Cannot delete — this territory has ' + count + ' names. Use merge instead.'); return; }
+  if (count > 0) { alert('Cannot delete — this world has ' + count + ' names. Use merge instead.'); return; }
   const { error } = await supabase.from('territories').delete().eq('name', name);
   if (error){ showStatus('Delete failed: ' + error.message, 'err'); }
 }
@@ -212,7 +212,7 @@ function render(){
       `<button type="button" class="terr-chip${state.terrFilter===t?' active':''}" data-terr="${esc(t)}"><b>${counts[t]}</b>${esc(t)}</button>`
     ).join('');
     const byTerr = {};
-    sorted.forEach(r => { const t = r.territory || '(No territory)'; (byTerr[t]=byTerr[t]||[]).push(r); });
+    sorted.forEach(r => { const t = r.territory || '(No world)'; (byTerr[t]=byTerr[t]||[]).push(r); });
     let html = '';
     Object.keys(byTerr).sort().forEach(t => { html += groupHeaderHtml(t, byTerr[t].length) + byTerr[t].map(rowHtml).join(''); });
     tbody.innerHTML = html || '<tr><td colspan="10" class="empty-note">No results</td></tr>';
@@ -417,7 +417,7 @@ function wireTerrModal(){
       await renameTerritory(oldName, e.target.value);
     } else if (e.target.dataset.act === 'mergeto'){
       const target = e.target.value;
-      if (target && confirm(`Merge "${oldName}" into "${target}"? All names will move, the original territory will be deleted.`)){
+      if (target && confirm(`Merge "${oldName}" into "${target}"? All names will move, the original world will be deleted.`)){
         await mergeTerritory(oldName, target);
       } else { e.target.value = ''; }
     }
